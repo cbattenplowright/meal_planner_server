@@ -10,6 +10,8 @@ public class MealApiService {
         String uri = String.format("https://www.themealdb.com/api/json/v1/1/search.php?f=%c", letter);
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
+//        return result;
+        System.out.println(result);
         return result;
     }
 }
