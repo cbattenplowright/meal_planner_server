@@ -17,7 +17,7 @@ public class MealApiController {
     MealApiService mealApiService;
 
     @GetMapping(value = "/{letter}")
-    public ResponseEntity<String> getMealsByLetter(@PathVariable("letter") Character letter){
+    public ResponseEntity<String> getMealsByLetter(@PathVariable("letter") Character letter) throws Exception {
         return new ResponseEntity<String>(mealApiService.getMealsByLetter(letter), HttpStatus.OK);
     }
 
