@@ -8,6 +8,7 @@ import com.calsam.MealPlanner.models.MealResponse;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -42,27 +43,25 @@ public class MealApiService {
     public void constructMealObjectsFromResponse(MealResponse.Meal mealObjectFromAPI) {
         ArrayList<String> ingredients = new ArrayList<>();
         ArrayList<String> measures = new ArrayList<>();
+       for(int i = 1; i < 21; i++){
+           try {
+               Field ingredientField = MealResponse.Meal.class.getDeclaredField("strIngredient" + i);
+               Field measureField = MealResponse.Meal.class.getDeclaredField("strMeasure" + i);
+               measureField.setAccessible(true);
+               ingredientField.setAccessible(true);
+               String measure = (String) measureField.get(mealObjectFromAPI);
+               String ingredient = (String) ingredientField.get(mealObjectFromAPI);
+               if (ingredient != null && !ingredient.isEmpty()) {
+                   ingredients.add(ingredient);
+               }
+               if (measure != null && !measure.isEmpty()) {
+                   measures.add(measure);
+               }
 
-        int getterIndex = 1;
-
-        ingredients.add(mealObjectFromAPI.getStrIngredient1());
-        measures.add(mealObjectFromAPI.getStrMeasure1());
-//        for(int i = 1; i < 21; i++){
-//            try {
-//                String ingredient = (String) MealResponse.Meal.class.getDeclaredField("strIngredient" + i).get(mealObjectFromAPI);
-//                String measure = (String) MealResponse.Meal.class.getDeclaredField("strMeasure" + i).get(mealObjectFromAPI);
-//                // Check if the ingredient is not null or empty
-//                if (ingredient != null && !ingredient.isEmpty()) {
-//                    ingredients.add(ingredient);
-//                }
-//                if (measure != null && !measure.isEmpty()) {
-//                    measures.add(measure);
-//                }
-//
-//            } catch (NoSuchFieldException | IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
+           } catch (NoSuchFieldException | IllegalAccessException e) {
+               e.printStackTrace();
+           }
+       }
 
         Meal meal = new Meal(mealObjectFromAPI.getStrMeal(), mealObjectFromAPI.getStrArea(), mealObjectFromAPI.getStrCategory(), mealObjectFromAPI.getStrInstructions(), mealObjectFromAPI.getStrMealThumb(), ingredients, measures);
 
