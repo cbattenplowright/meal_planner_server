@@ -1,5 +1,5 @@
 package com.calsam.MealPlanner.controllers;
-
+import com.calsam.MealPlanner.models.MealResponse;
 import com.calsam.MealPlanner.services.MealApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/meals")
@@ -17,8 +18,9 @@ public class MealApiController {
     MealApiService mealApiService;
 
     @GetMapping(value = "/{letter}")
-    public ResponseEntity<String> getMealsByLetter(@PathVariable("letter") Character letter) throws Exception {
-        return new ResponseEntity<String>(mealApiService.getMealsByLetter(letter), HttpStatus.OK);
+    public ResponseEntity<List<MealResponse.Meal>> getMealsByLetter(@PathVariable("letter") Character letter) throws Exception {
+        List<MealResponse.Meal> meals = mealApiService.getMealsByLetter(letter);
+        return new ResponseEntity<>(meals, HttpStatus.OK);
     }
 
 }
