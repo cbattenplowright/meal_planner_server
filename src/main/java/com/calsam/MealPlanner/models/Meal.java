@@ -100,4 +100,12 @@ public class Meal {
     this.measures = measures;
   }
 
+  @Override
+  public String toString() {
+    return "Meal{" +
+            ", ingredients='" + ingredients + '\'' +
+            ", measures='" + measures + '\'' +
+            '}';
+  }
+
 }
