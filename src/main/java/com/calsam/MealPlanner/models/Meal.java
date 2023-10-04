@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table (name = "meals")
 public class Meal {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

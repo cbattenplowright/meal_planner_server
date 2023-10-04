@@ -1,4 +1,5 @@
 package com.calsam.MealPlanner.services;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.net.http.HttpResponse;
 @Service
 public class MealApiService {
 
-    public List<MealResponse.Meal> getMealsByLetter(Character letter) throws Exception{
+    public List<MealResponse.Meal> getMealsByLetter(Character letter) throws Exception {
         String uri = String.format("https://www.themealdb.com/api/json/v1/1/search.php?f=%c", letter);
         Gson gson = new Gson();
 
@@ -43,28 +44,29 @@ public class MealApiService {
     public void constructMealObjectsFromResponse(MealResponse.Meal mealObjectFromAPI) {
         ArrayList<String> ingredients = new ArrayList<>();
         ArrayList<String> measures = new ArrayList<>();
-       for(int i = 1; i < 21; i++){
-           try {
-               Field ingredientField = MealResponse.Meal.class.getDeclaredField("strIngredient" + i);
-               Field measureField = MealResponse.Meal.class.getDeclaredField("strMeasure" + i);
-               measureField.setAccessible(true);
-               ingredientField.setAccessible(true);
-               String measure = (String) measureField.get(mealObjectFromAPI);
-               String ingredient = (String) ingredientField.get(mealObjectFromAPI);
-               if (ingredient != null && !ingredient.isEmpty()) {
-                   ingredients.add(ingredient);
-               }
-               if (measure != null && !measure.isEmpty()) {
-                   measures.add(measure);
-               }
+        for (int i = 1; i < 21; i++) {
+            try {
+                Field ingredientField = MealResponse.Meal.class.getDeclaredField("strIngredient" + i);
+                Field measureField = MealResponse.Meal.class.getDeclaredField("strMeasure" + i);
+                measureField.setAccessible(true);
+                ingredientField.setAccessible(true);
+                String measure = (String) measureField.get(mealObjectFromAPI);
+                String ingredient = (String) ingredientField.get(mealObjectFromAPI);
+                if (ingredient != null && !ingredient.isEmpty()) {
+                    ingredients.add(ingredient);
+                }
+                if (measure != null && !measure.isEmpty()) {
+                    measures.add(measure);
+                }
 
-           } catch (NoSuchFieldException | IllegalAccessException e) {
-               e.printStackTrace();
-           }
-       }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 
         Meal meal = new Meal(mealObjectFromAPI.getStrMeal(), mealObjectFromAPI.getStrArea(), mealObjectFromAPI.getStrCategory(), mealObjectFromAPI.getStrInstructions(), mealObjectFromAPI.getStrMealThumb(), ingredients, measures);
 
         System.out.println(meal);
+
     }
 }
