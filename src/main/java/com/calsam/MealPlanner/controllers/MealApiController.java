@@ -17,9 +17,9 @@ public class MealApiController {
     @Autowired
     MealApiService mealApiService;
 
-    @GetMapping(value = "/{letter}")
-    public ResponseEntity<List<MealResponse.Meal>> getMealsByLetter(@PathVariable("letter") Character letter) throws Exception {
-        List<MealResponse.Meal> meals = mealApiService.getMealsByLetter(letter);
+    @GetMapping()
+    public ResponseEntity<String> getMealsByLetter() throws Exception {
+        String meals = mealApiService.getMealsByLetter();
         return new ResponseEntity<>(meals, HttpStatus.OK);
     }
 
