@@ -42,9 +42,11 @@ public class MealApiService {
             MealResponse mealResponse = gson.fromJson(getResponse.body(), MealResponse.class);
             System.out.println("The body output is:");
             // System.out.println(getResponse.body());
-            System.out.println(mealResponse.getMeals().toString());
+            // System.out.println(mealResponse.getMeals().toString());
             List<MealResponse.Meal> meals = mealResponse.getMeals();
-            constructMealObjectFromResponse(meals);
+            if(meals != null){
+                constructMealObjectFromResponse(meals);
+            }
         }
         return "Complete";
     }
@@ -64,11 +66,21 @@ public class MealApiService {
                     ingredientField.setAccessible(true);
                     String measure = (String) measureField.get(mealToReformat);
                     String ingredient = (String) ingredientField.get(mealToReformat);
-                    if (ingredient != null && !ingredient.isEmpty() && !ingredient.equals(",")) {
-                        ingredients.add(ingredient);
+                    if (ingredient != null && !ingredient.isEmpty() && !ingredient.equals(",") && !ingredient.equals(" ")) {
+                        if(ingredient.charAt(0) == ('"')){
+                            ingredient = ingredient.substring(1, ingredient.length()-1);
+                            ingredients.add(ingredient.trim());
+                        } else{
+                            ingredients.add(ingredient.trim());
+                        }
                     }
-                    if (measure != null && !measure.isEmpty() && !measure.equals(",")) {
-                        measures.add(measure);
+                    if (measure != null && !measure.isEmpty() && !measure.equals(",") && !measure.equals(" ")) {
+                        if(measure.charAt(0) == ('"')){
+                            measure = measure.substring(1, measure.length()-1);
+                            measures.add(measure.trim());
+                        } else{
+                            measures.add(measure.trim());
+                        }
                     }
 
                 } catch (NoSuchFieldException | IllegalAccessException e) {
