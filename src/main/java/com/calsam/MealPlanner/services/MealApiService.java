@@ -60,39 +60,39 @@ public class MealApiService {
     public void constructMealObjectFromResponse(List<MealResponse.Meal> meals) {
         List<Meal> mealListToSave = new ArrayList<>();
         for (MealResponse.Meal mealToReformat : meals){
-//            ArrayList<String> ingredients = new ArrayList<>();
-//            ArrayList<String> measures = new ArrayList<>();
-//            for (int i = 1; i < 21; i++) {
-//                try {
-//                    Field ingredientField = MealResponse.Meal.class.getDeclaredField("strIngredient" + i);
-//                    Field measureField = MealResponse.Meal.class.getDeclaredField("strMeasure" + i);
-//                    measureField.setAccessible(true);
-//                    ingredientField.setAccessible(true);
-//                    String measure = (String) measureField.get(mealToReformat);
-//                    String ingredient = (String) ingredientField.get(mealToReformat);
-//                    if (ingredient != null && !ingredient.isEmpty() && !ingredient.equals(",") && !ingredient.equals(" ")) {
-//                        if(ingredient.charAt(0) == ('"')){
-//                            ingredient = ingredient.substring(1, ingredient.length()-1);
-//                            ingredients.add(ingredient.trim());
-//                        } else{
-//                            ingredients.add(ingredient.trim());
-//                        }
-//                    }
-//                    if (measure != null && !measure.isEmpty() && !measure.equals(",") && !measure.equals(" ")) {
-//                        if(measure.charAt(0) == ('"')){
-//                            measure = measure.substring(1, measure.length()-1);
-//                            measures.add(measure.trim());
-//                        } else{
-//                            measures.add(measure.trim());
-//                        }
-//                    }
-//
-//                } catch (NoSuchFieldException | IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+            ArrayList<String> ingredients = new ArrayList<>();
+            ArrayList<String> measures = new ArrayList<>();
+            for (int i = 1; i < 21; i++) {
+                try {
+                    Field ingredientField = MealResponse.Meal.class.getDeclaredField("strIngredient" + i);
+                    Field measureField = MealResponse.Meal.class.getDeclaredField("strMeasure" + i);
+                    measureField.setAccessible(true);
+                    ingredientField.setAccessible(true);
+                    String measure = (String) measureField.get(mealToReformat);
+                    String ingredient = (String) ingredientField.get(mealToReformat);
+                    if (ingredient != null && !ingredient.isEmpty() && !ingredient.equals(",") && !ingredient.equals(" ")) {
+                        if(ingredient.charAt(0) == ('"')){
+                            ingredient = ingredient.substring(1, ingredient.length()-1);
+                            ingredients.add(ingredient.trim());
+                        } else{
+                            ingredients.add(ingredient.trim());
+                        }
+                    }
+                    if (measure != null && !measure.isEmpty() && !measure.equals(",") && !measure.equals(" ")) {
+                        if(measure.charAt(0) == ('"')){
+                            measure = measure.substring(1, measure.length()-1);
+                            measures.add(measure.trim());
+                        } else{
+                            measures.add(measure.trim());
+                        }
+                    }
 
-            Meal meal = new Meal(mealToReformat.getStrMeal(), mealToReformat.getStrArea(), mealToReformat.getStrCategory(), mealToReformat.getStrInstructions(), mealToReformat.getStrMealThumb());
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Meal meal = new Meal(mealToReformat.getStrMeal(), mealToReformat.getStrArea(), mealToReformat.getStrCategory(), mealToReformat.getStrInstructions(), mealToReformat.getStrMealThumb(), ingredients, measures);
             mealListToSave.add(meal);
         }
         System.out.println(mealListToSave);
