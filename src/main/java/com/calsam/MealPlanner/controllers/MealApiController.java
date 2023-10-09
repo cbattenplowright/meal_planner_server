@@ -1,4 +1,5 @@
 package com.calsam.MealPlanner.controllers;
+import com.calsam.MealPlanner.models.Meal;
 import com.calsam.MealPlanner.models.MealResponse;
 import com.calsam.MealPlanner.services.MealApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,15 @@ public class MealApiController {
     @Autowired
     MealApiService mealApiService;
 
-    @GetMapping()
-    public ResponseEntity<String> getMealsByLetter() throws Exception {
-        String meals = mealApiService.getMealsByLetter();
+//    @GetMapping()
+//    public ResponseEntity<String> getMealsByLetter() throws Exception {
+//        String meals = mealApiService.getMealsByLetter();
+//        return new ResponseEntity<>(meals, HttpStatus.OK);
+//    }
+
+    @GetMapping
+    public ResponseEntity<List<Meal>> findAllMeals() {
+        List<Meal> meals = mealApiService.findAllMeals();
         return new ResponseEntity<>(meals, HttpStatus.OK);
     }
-
 }
