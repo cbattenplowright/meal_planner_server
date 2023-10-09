@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MealRepository extends JpaRepository<Meal, Long> {
 
-    @Query(value = "SELECT * FROM meals LIMIT 1", nativeQuery = true)
-    List<Meal> findAllMeals();
+//    @Query(value = "SELECT * FROM meals LIMIT 1", nativeQuery = true)
+//    List<Meal> findAllMeals();
 }

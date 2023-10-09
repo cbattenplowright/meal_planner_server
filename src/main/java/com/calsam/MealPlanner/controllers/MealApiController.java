@@ -18,11 +18,11 @@ public class MealApiController {
     @Autowired
     MealApiService mealApiService;
 
-//    @GetMapping()
-//    public ResponseEntity<String> getMealsByLetter() throws Exception {
-//        String meals = mealApiService.getMealsByLetter();
-//        return new ResponseEntity<>(meals, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/fetch")
+    public ResponseEntity<String> getMealsByLetter() throws Exception {
+        String meals = mealApiService.getMealsByLetter();
+        return new ResponseEntity<>(meals, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<Meal>> findAllMeals() {

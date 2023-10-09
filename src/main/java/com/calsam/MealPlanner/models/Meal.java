@@ -18,19 +18,13 @@ public class Meal {
   private String instructions;
   @Column
   private String img;
-  @Column
-  private List<String> ingredients;
-  @Column
-  private List<String> measures;
 
-  public Meal(String name, String cuisine, String category, String instructions, String img, List<String> ingredients, List<String> measures){
+  public Meal(String name, String cuisine, String category, String instructions, String img){
     this.name = name;
     this.cuisine = cuisine;
     this.category = category;
     this.instructions = instructions;
     this.img = img;
-    this.ingredients = ingredients;
-    this.measures = measures;
   }
 
   public Meal(){
@@ -61,14 +55,6 @@ public class Meal {
     return img;
   }
 
-  public List<String> getIngredients() {
-    return ingredients;
-  }
-
-  public List<String> getMeasures() {
-    return measures;
-  }
-
   public void setId(Long id) {
     this.id = id;
   }
@@ -91,22 +77,6 @@ public class Meal {
 
   public void setImg(String img) {
     this.img = img;
-  }
-
-  public void setIngredients(List<String> ingredients) {
-    this.ingredients = ingredients;
-  }
-
-  public void setMeasures(List<String> measures) {
-    this.measures = measures;
-  }
-
-  @Override
-  public String toString() {
-    return "Meal{" +
-            ", ingredients='" + ingredients + '\'' +
-            ", measures='" + measures + '\'' +
-            '}';
   }
 
 }
