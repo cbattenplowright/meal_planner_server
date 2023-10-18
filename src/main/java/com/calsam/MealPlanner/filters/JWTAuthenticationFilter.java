@@ -1,5 +1,26 @@
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+package com.calsam.MealPlanner.filters;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.calsam.MealPlanner.configurations.SecurityConstants;
+import com.calsam.MealPlanner.models.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    
     private AuthenticationManager authenticationManager;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -31,8 +52,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) throws IOException {
         String token = JWT.create()
                 .withSubject(((User) auth.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET.getBytes()));
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 
         String body = ((User) auth.getPrincipal()).getUsername() + " " + token;
 
