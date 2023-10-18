@@ -1,4 +1,5 @@
 package com.calsam.MealPlanner.services;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,20 +11,19 @@ import com.calsam.MealPlanner.models.UserDto;
 import com.calsam.MealPlanner.repositories.UserRepository;
 
 @Service
-public class UserService{
-  @Autowired
-  UserRepository userRepository;
+public class UserService {
+    @Autowired
+    UserRepository userRepository;
 
-  @Transactional(rollbackFor = Exception.class)
-  public User createUser(UserDto userDto){
 
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    public User createUser(UserDto userDto) {
 
-    String encodePassword = bCryptPasswordEncoder
-            .encode(userDto.getPassword());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    User newUser = new User(userDto.getUsername(), encodePassword, userDto.getEmail());
-    return save(newUser);
+        String encodePassword = bCryptPasswordEncoder
+                .encode(userDto.getPassword());
+
+        User newUser = new User(userDto.getUsername(), encodePassword, userDto.getEmail());
+        return userRepository.save(newUser);
     }
-  }
 }
