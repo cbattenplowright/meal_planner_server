@@ -12,12 +12,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((authz) -> authz
 
-                        .anyRequest().permitAll()
-                )
-                .httpBasic(withDefaults());
+        http.authorizeHttpRequests((authz) -> authz.anyRequest().permitAll()).httpBasic(withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
         //http.csrf().disable(); --> this version is deprecated
 
