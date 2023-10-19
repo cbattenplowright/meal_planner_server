@@ -9,20 +9,4 @@ import com.calsam.MealPlanner.repositories.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-
-    public User createUser(UserDto userDto) {
-
-        String encodePassword = passwordEncoder
-                .encode(userDto.getPassword());
-
-        User newUser = new User(userDto.getUsername(), encodePassword, userDto.getEmail());
-
-        return userRepository.save(newUser);
-    }
 }
